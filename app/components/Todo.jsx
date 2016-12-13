@@ -16,13 +16,17 @@ var Todo = React.createClass({
 
   render: function () {
     var {id, text, completed} = this.props;
+    var todoClassName = completed ? 'todo todo-completed' : 'todo';
 
     return (
-      <div onClick={() => {this.markCompleted();}}>
-        <input type="checkbox" ref="isComplete" checked={completed}/>
-        <span className="todo-text">
-          {text}
-        </span>
+      <div className={todoClassName} onClick={() => {this.markCompleted();}}>
+        <div>
+          <input type="checkbox" ref="isComplete" checked={completed}/>
+        </div>
+        <div>
+          <p className="todo-text">{text}</p>
+          {/* <p className="todo__subtext">{renderDate()}</p> */}
+        </div>
       </div>
     );
   }

@@ -54,7 +54,6 @@ describe('Todo', () => {
       expect(spy).toHaveBeenCalledWith(1, true);
     });
 
-
   });
 
 });

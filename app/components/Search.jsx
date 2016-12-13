@@ -17,13 +17,15 @@ var Search = React.createClass({
 
   render: function() {
     return (
-      <div>
+      <div className="container__header">
         <div>
           <input type="text" ref="searchTodo" placeholder="Search" onChange={this.handleSearch}/>
         </div>
         <div>
-          <input type="checkbox" ref="showCompleted" onChange={this.handleSearch}/>
-          Show completed tasks
+          <label>
+            <input type="checkbox" ref="showCompleted" onChange={this.handleSearch}/>
+            Show completed tasks
+          </label>
         </div>
       </div>
     );

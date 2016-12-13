@@ -13,12 +13,18 @@ var TodoList = React.createClass({
     var {todos} = this.props;
 
     var renderTodos = () => {
-      return todos.map((todo) => {
-        return (
-          <Todo key={todo.id} {...todo} handleComplete={this.props.handleComplete}/>
-        );
-      });
-    };
+     if (todos.length === 0) {
+       return (
+         <p className="container__message">Nothing To Do</p>
+       );
+     }
+
+     return todos.map((todo) => {
+       return (
+         <Todo key={todo.id} {...todo} handleComplete={this.props.handleComplete}/>
+       );
+     });
+   };
 
     return (
       <div>

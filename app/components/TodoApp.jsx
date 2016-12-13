@@ -64,10 +64,12 @@ var TodoApp = React.createClass({
     return (
       <div className="row">
         <div className="column small-centered medium-6 large-4">
-          <h1 className="page-title">TodoApp</h1>
-          <Search handleSearch={this.handleSearch}/>
-          <TodoList todos={todosToRender} handleComplete={this.handleComplete}/>
-          <AddTodoForm handleAdd={this.handleAddTodo} />
+          <div className="container">
+            <h1 className="page-title">TodoApp</h1>
+            <Search handleSearch={this.handleSearch}/>
+            <TodoList todos={todosToRender} handleComplete={this.handleComplete}/>
+            <AddTodoForm handleAdd={this.handleAddTodo} />
+          </div>
         </div>
       </div>
     )
