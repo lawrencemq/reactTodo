@@ -8,22 +8,23 @@ var Search = React.createClass({
     };
   },
 
-  onSubmit: function(e){
-    e.preventDefault();
+  handleSearch: function(){
+    var showCompleted = this.refs.showCompleted.checked;
+    var query = this.refs.searchTodo.value.trim();
 
-    var query = this.refs.searchTodo.value;
-    if(query.length > 0){
-      this.refs.searchTodo.value = '';
-      this.props.handleSearch(query);
-    }
+    this.props.handleSearch(query, showCompleted);
   },
 
   render: function() {
     return (
       <div>
-        <form onSubmit={this.onSubmit}>
-          <input type="text" ref="searchTodo" placeholder="Search" />
-        </form>
+        <div>
+          <input type="text" ref="searchTodo" placeholder="Search" onChange={this.handleSearch}/>
+        </div>
+        <div>
+          <input type="checkbox" ref="showCompleted" onChange={this.handleSearch}/>
+          Show completed tasks
+        </div>
       </div>
     );
   }

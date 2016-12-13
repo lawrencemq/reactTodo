@@ -2,19 +2,24 @@ var React = require('react');
 
 var AddTodoForm = React.createClass({
 
+  propTypes: {
+    handleAdd: React.PropTypes.func.isRequired
+  },
+
   onSubmitNewTodo: function(e){
     e.preventDefault();
     var {handleAdd} = this.props;
 
-    var todoValue = this.refs.todoAction.value;
+    var todoValue = this.refs.todoAction.value.trim();
     if(todoValue.length > 0){
       this.refs.todoAction.value = '';
       handleAdd(todoValue);
+    }else{
+      this.refs.todoAction.focus();
     }
   },
 
   render: function() {
-
     return (
       <div>
         <form onSubmit={this.onSubmitNewTodo}>

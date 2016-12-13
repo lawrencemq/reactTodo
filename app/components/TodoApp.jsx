@@ -1,4 +1,6 @@
 var React = require('react');
+var uuid = require('node-uuid');
+
 var Search = require('Search');
 var TodoList = require('TodoList');
 var AddTodoForm = require('AddTodoForm');
@@ -7,57 +9,64 @@ var TodoApp = React.createClass({
 
   getInitialState: function () {
     return {
-      todos: [
-        {
-          id: 1,
-          text: "Walk corgi"
-        },
-        {
-          id: 2,
-          text: "clean yard"
-        },
-        {
-          id: 3,
-          text: "buy groceries"
-        },
-        {
-          id: 4,
-          text: "Run!"
-        }
-      ]
+      showCompleted: false,
+      searchText: '',
+      todos: []
     };
   },
 
-  handleSearch: function(query){
-    console.log('searching for query', query);
-    //TODO
+  handleSearch: function(query, showCompleted){
+    this.setState({
+      showCompleted: showCompleted,
+      searchText: query.toLowerCase()
+    });
   },
 
   handleAddTodo: function(newTodoStr){
-    var currentMaxId = Math.max.apply(Math, this.state.todos.map((todo) => {
-      return todo.id;
-    }));
-    const newTodo = {
-      id: currentMaxId + 1,
-      text: newTodoStr
-    };
+    const {todos} = this.state;
+    this.setState({
+      todos: [
+        ...todos,
+        {
+          id: uuid(),
+          text: newTodoStr,
+          completed: false
+        }
+      ]
+    });
+  },
 
-    var newTodoList = this.state.todos.slice(0);
-    newTodoList.push(newTodo);
+  handleComplete: function(id, complete){
+    var {todos} = this.state;
+    const newTodoList = todos.map((todo) => {
+      if(todo.id === id){
+        todo.completed = !todo.completed;
+      }
+      return todo;
+    });
 
     this.setState({
       todos: newTodoList
+    })
+  },
+
+  findTodosToRender: function () {
+    var {showCompleted, searchText} = this.state;
+    return this.state.todos.filter((todo) => {
+      return todo.text.toLowerCase().startsWith(searchText)
+    }).filter((todo) => {
+      return showCompleted || !todo.completed
     });
   },
 
   render: function () {
-    var {todos} = this.state;
+    const todosToRender = this.findTodosToRender()
     return (
       <div className="row">
         <div className="column small-centered medium-6 large-4">
           <h1 className="page-title">TodoApp</h1>
           <Search handleSearch={this.handleSearch}/>
-          <TodoList todos={todos}/>
+          <TodoList todos={todosToRender} handleComplete={this.handleComplete}/>
           <AddTodoForm handleAdd={this.handleAddTodo} />
         </div>
       </div>

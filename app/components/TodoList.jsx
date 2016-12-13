@@ -3,8 +3,10 @@ var Todo = require('Todo');
 
 var TodoList = React.createClass({
 
-  propTypes: function () {
-    todos: React.PropTypes.array.isRequired
+  propTypes:{
+    todos: React.PropTypes.array.isRequired,
+    handleComplete: React.PropTypes.func.isRequired
+
   },
 
   render: function () {
@@ -13,7 +15,7 @@ var TodoList = React.createClass({
     var renderTodos = () => {
       return todos.map((todo) => {
         return (
-          <Todo id={todo.id} {...todo}/>
+          <Todo key={todo.id} {...todo} handleComplete={this.props.handleComplete}/>
         );
       });
     };
