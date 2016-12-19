@@ -80,9 +80,9 @@ var TodoApp = React.createClass({
     const todosToRender = this.findTodosToRender()
     return (
       <div className="row">
-        <div className="column small-centered medium-6 large-4">
+        <div className="column small-centered small-11 medium-6 large-4">
+          <h1 className="page-title">TodoApp</h1>
           <div className="container">
-            <h1 className="page-title">TodoApp</h1>
             <Search handleSearch={this.handleSearch}/>
             <TodoList todos={todosToRender} handleComplete={this.handleComplete}/>
             <AddTodoForm handleAdd={this.handleAddTodo} />

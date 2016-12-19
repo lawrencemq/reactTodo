@@ -12,6 +12,15 @@ describe('TodoList', () => {
     expect(TodoList).toExist();
   });
 
+  it('should render a message for no todos if there are none given', () => {
+    var spy = expect.createSpy();
+    var todoList = TestUtils.renderIntoDocument(<TodoList todos={[]} handleComplete={spy}/>);
+
+    var $el = $(ReactDOM.findDOMNode(todoList));
+    expect($el.find('.container__message').length).toBe(1);
+    expect($el.find('.container__message').text()).toBe('Nothing To Do');
+  });
+
   it('should render a Todo for each todo item', () =>{
     var todoItems = [
       {
