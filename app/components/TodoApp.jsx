@@ -61,6 +61,14 @@ var TodoApp = React.createClass({
       return todo.text.toLowerCase().startsWith(searchText)
     }).filter((todo) => {
       return showCompleted || !todo.completed
+    }).sort((a, b) => {
+      if(!a.completed && b.completed){
+        return -1;
+      }else if(a.completed && !b.completed){
+        return 1;
+      }else{
+        return 0;
+      }
     });
   },
 

@@ -15,12 +15,12 @@ describe('TodoList', () => {
   it('should render a Todo for each todo item', () =>{
     var todoItems = [
       {
-        id: 1,
+        id: '1',
         text: 'hello',
         completed: false
       },
       {
-        id: 2,
+        id: '2',
         text: 'world',
         completed: false
       }
@@ -34,7 +34,7 @@ describe('TodoList', () => {
   it('should call handleComplete if Todo triggers a handleComplete', () => {
     var todoItems = [
       {
-        id: 1,
+        id: '1',
         text: 'hello',
         completed: false
       }
@@ -44,7 +44,7 @@ describe('TodoList', () => {
     var todoComponent = TestUtils.findRenderedComponentWithType(todoList, Todo); // getting the first todo and marking it as complete
     todoComponent.markCompleted();
 
-    expect(spy).toHaveBeenCalledWith(1, true);
+    expect(spy).toHaveBeenCalledWith('1', true);
   });
 
 });

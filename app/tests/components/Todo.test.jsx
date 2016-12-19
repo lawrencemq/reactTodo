@@ -23,7 +23,6 @@ describe('Todo', () => {
       var todo = TestUtils.renderIntoDocument(<Todo {...todoItem} handleComplete={spy}/>);
       var $el = $(ReactDOM.findDOMNode(todo));
       var actualText = $el.find('.todo-text').text();
-      // var actualText = $el.text();
       expect(actualText).toBe(todoItem.text);
     });
 
@@ -43,7 +42,7 @@ describe('Todo', () => {
     it('should be called on click', () => {
       var spy = expect.createSpy();
       var todoItems = {
-        id: 1,
+        id: '1',
         text: 'hello',
         completed: false
       };
@@ -51,7 +50,7 @@ describe('Todo', () => {
       var $el = $(ReactDOM.findDOMNode(todo));
 
       TestUtils.Simulate.click($el[0]);
-      expect(spy).toHaveBeenCalledWith(1, true);
+      expect(spy).toHaveBeenCalledWith('1', true);
     });
 
   });

@@ -8,23 +8,26 @@ var TestUtils = require('react-addons-test-utils');
 var TodoApp = require('TodoApp');
 
 describe('TodoApp', () => {
+
+  beforeEach(() => {
+    localStorage.removeItem('todos');
+  });
+
   it('should exist', () => {
     expect(TodoApp).toExist();
   });
-
-
 
   describe('handleComplete', () => {
 
     it('should mark the appropriate todo task completed', () => {
       var todoItems = [
         {
-          id: 1,
+          id: '1',
           text: 'hello',
           completed: false
         },
         {
-          id: 2,
+          id: '2',
           text: 'world',
           completed: false
         }
@@ -35,10 +38,10 @@ describe('TodoApp', () => {
         todos: todoItems
       });
 
-      todoApp.handleComplete(2, true);
+      todoApp.handleComplete('2', true);
       expect(todoApp.state.todos[1].completed).toBe(true);
 
-      todoApp.handleComplete(2, false);
+      todoApp.handleComplete('2', false);
       expect(todoApp.state.todos[1].completed).toBe(false);
 
 
@@ -57,7 +60,7 @@ describe('TodoApp', () => {
       expect(todoApp.state.todos[0].text).toBe(todoStr);
     });
 
-    it('should add a stask with a different id to a todo list', () => {
+    it('should add a task with a different id to a todo list', () => {
       var todoApp = TestUtils.renderIntoDocument(<TodoApp />);
       todoApp.setState({
         todos: [
@@ -94,19 +97,19 @@ describe('TodoApp', () => {
   describe('findTodosToRender', () => {
     var todoItems = [
       {
-        id: 1,
+        id: '1',
         text: 'Hello',
         completed: false
       },
       {
-        id: 2,
-        text: 'world',
-        completed: false
-      },
-      {
-        id: 3,
+        id: '2',
         text: 'world',
         completed: true
+      },
+      {
+        id: '3',
+        text: 'from bender',
+        completed: false
       }
     ];
     it('should filter tasks based on the starting query string', () => {
@@ -119,7 +122,7 @@ describe('TodoApp', () => {
 
       const returnedList = todoApp.findTodosToRender();
       expect(returnedList.length).toBe(1);
-      expect(returnedList[0].id).toBe(1);
+      expect(returnedList[0].id).toBe('1');
     });
 
     it('should filter out completed tasks by default', () => {
@@ -147,6 +150,20 @@ describe('TodoApp', () => {
       const returnedList = todoApp.findTodosToRender();
       expect(returnedList.length).toBe(3);
 
+    });
+
+    it('should sort non-completed first', () => {
+      var todoApp = TestUtils.renderIntoDocument(<TodoApp />);
+      todoApp.setState({
+        todos: todoItems,
+        showCompleted: true
+      });
+
+      const returnedList = todoApp.findTodosToRender();
+      expect(returnedList.length).toBe(3);
+      expect(returnedList[0].completed).toBe(false);
+      expect(returnedList[1].completed).toBe(false);
+      expect(returnedList[2].completed).toBe(true);
     });
 
   });
