@@ -3,6 +3,7 @@ var ReactDOM = require('react-dom');
 var expect = require('expect');
 var $ = require('jQuery');
 var uuid = require('node-uuid');
+var moment = require('moment');
 var TestUtils = require('react-addons-test-utils');
 
 var Todo = require('Todo');
@@ -44,7 +45,9 @@ describe('Todo', () => {
       var todoItems = {
         id: '1',
         text: 'hello',
-        completed: false
+        completed: false,
+        createdAt: moment.unix(0),
+        completedAt: undefined
       };
       var todo = TestUtils.renderIntoDocument(<Todo {...todoItems} handleComplete={spy}/>);
       var $el = $(ReactDOM.findDOMNode(todo));

@@ -24,7 +24,7 @@ describe('TodoApp', () => {
         {
           id: '1',
           text: 'hello',
-          completed: false
+          completed: false,
         },
         {
           id: '2',
@@ -40,9 +40,11 @@ describe('TodoApp', () => {
 
       todoApp.handleComplete('2', true);
       expect(todoApp.state.todos[1].completed).toBe(true);
+      expect(todoApp.state.todos[1].completedAt).toBeA('number');
 
       todoApp.handleComplete('2', false);
       expect(todoApp.state.todos[1].completed).toBe(false);
+      expect(todoApp.state.todos[1].completedAt).toBe(undefined);
 
 
     });
@@ -58,6 +60,7 @@ describe('TodoApp', () => {
 
       expect(todoApp.state.todos.length).toBe(1);
       expect(todoApp.state.todos[0].text).toBe(todoStr);
+      expect(todoApp.state.todos[0].createdAt).toBeA('number');
     });
 
     it('should add a task with a different id to a todo list', () => {
