@@ -27,7 +27,7 @@ describe('Actions', () => {
   it('should generate toggleTodoAsCompleted', () => {
     var expectedAction = {
       type: 'TOGGLE_TODO_AS_COMPLETED',
-      todoId: '12'
+      id: '12'
     };
 
     var responseActions = actions.toggleTodoAsCompleted('12');

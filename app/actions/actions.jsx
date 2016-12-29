@@ -14,10 +14,10 @@ export var toggleShowCompleted = () => {
 };
 
 // toggling individual todo
-export var toggleTodoAsCompleted = (todoId) => {
+export var toggleTodoAsCompleted = (id) => {
   return {
     type: 'TOGGLE_TODO_AS_COMPLETED',
-    todoId
+    id
   }
 };
 
