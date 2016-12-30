@@ -2,10 +2,12 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var expect = require('expect');
 var $ = require('jQuery');
+var {Provider} = require('react-redux');
 var TestUtils = require('react-addons-test-utils');
 
-var TodoList = require('TodoList');
-var Todo = require('Todo');
+import ConnectedTodoList, {TodoList} from 'TodoList';
+import ConnectedTodo, {Todo} from 'Todo';
+import {configure} from 'configureStore';
 
 describe('TodoList', () => {
   it('should exist', () => {
@@ -14,7 +16,7 @@ describe('TodoList', () => {
 
   it('should render a message for no todos if there are none given', () => {
     var spy = expect.createSpy();
-    var todoList = TestUtils.renderIntoDocument(<TodoList todos={[]} handleComplete={spy}/>);
+    var todoList = TestUtils.renderIntoDocument(<TodoList todos={[]} />);
 
     var $el = $(ReactDOM.findDOMNode(todoList));
     expect($el.find('.container__message').length).toBe(1);
@@ -26,34 +28,32 @@ describe('TodoList', () => {
       {
         id: '1',
         text: 'hello',
-        completed: false
+        completed: false,
+        completedAt: undefined,
+        createdAt: 500
       },
       {
         id: '2',
         text: 'world',
-        completed: false
+        completed: false,
+        completedAt: undefined,
+        createdAt: 401
       }
     ]
+
+    var store = configure({
+      todos: todoItems
+    });
+    var provider = TestUtils.renderIntoDocument(
+      <Provider store={store}>
+        <ConnectedTodoList />
+      </Provider>
+    );
+
     var spy = expect.createSpy();
-    var todoList = TestUtils.renderIntoDocument(<TodoList todos={todoItems} handleComplete={spy}/>);
-    var todoComponents = TestUtils.scryRenderedComponentsWithType(todoList, Todo);
+    var todoList = TestUtils.scryRenderedComponentsWithType(provider, ConnectedTodoList)[0];
+    var todoComponents = TestUtils.scryRenderedComponentsWithType(todoList, ConnectedTodo);
     expect(todoComponents.length).toBe(todoItems.length);
-  });
-
-  it('should call handleComplete if Todo triggers a handleComplete', () => {
-    var todoItems = [
-      {
-        id: '1',
-        text: 'hello',
-        completed: false
-      }
-    ];
-    var spy = expect.createSpy();
-    var todoList = TestUtils.renderIntoDocument(<TodoList todos={todoItems} handleComplete={spy}/>);
-    var todoComponent = TestUtils.findRenderedComponentWithType(todoList, Todo); // getting the first todo and marking it as complete
-    todoComponent.markCompleted();
-
-    expect(spy).toHaveBeenCalledWith('1', true);
   });
 
 });

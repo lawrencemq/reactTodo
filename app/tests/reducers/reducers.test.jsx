@@ -40,6 +40,32 @@ describe('Reducers', () => {
         expect(response[0].text).toEqual(action.text);
     });
 
+    it('should bulk add new todos', () => {
+      const todos = [
+        {
+            id: '123',
+            text: 'something',
+            completed: false,
+            createdAt: 123,
+            completedAt: undefined
+        },
+        {
+          id: '124',
+          text: 'else',
+          completed: true,
+          createdAt: 124,
+          completedAt: 125
+        }
+      ];
+      const action = {
+        type: 'ADD_TODOS',
+        todos
+      };
+      var response = reducers.todosReducer(df([]), df(action));
+      expect(response).toEqual(action.todos);
+
+    });
+
     it('should toggle todo', () => {
       var todos = [
         {

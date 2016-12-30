@@ -4,7 +4,7 @@ var expect = require('expect');
 var $ = require('jQuery');
 var TestUtils = require('react-addons-test-utils');
 
-var AddTodoForm = require('AddTodoForm');
+var {AddTodoForm} = require('AddTodoForm');
 
 describe('AddTodoForm', () => {
   it('should exist', () => {
@@ -12,19 +12,24 @@ describe('AddTodoForm', () => {
   });
 
 
-  it('should call handleAdd if valid task name entered', () => {
+  it('should dispatch ADD_TODO when valid task name entered', () => {
+    const action = {
+      type: 'ADD_TODO',
+      text: 'walk corgi'
+    };
+
     var spy = expect.createSpy();
-    var addTodoForm = TestUtils.renderIntoDocument(<AddTodoForm handleAdd={spy}/>);
+    var addTodoForm = TestUtils.renderIntoDocument(<AddTodoForm dispatch={spy}/>);
     var $el = $(ReactDOM.findDOMNode(addTodoForm));
-    addTodoForm.refs.todoAction.value = 'walk corgi';
+    addTodoForm.refs.todoAction.value = action.text;
     TestUtils.Simulate.submit($el.find('form')[0]);
 
-    expect(spy).toHaveBeenCalledWith('walk corgi');
+    expect(spy).toHaveBeenCalledWith(action);
   });
 
-  it('should not call handleAdd if empty task entered', () => {
+  it('should not dispatch ADD_TODO if empty task entered', () => {
     var spy = expect.createSpy();
-    var addTodoForm = TestUtils.renderIntoDocument(<AddTodoForm handleAdd={spy}/>);
+    var addTodoForm = TestUtils.renderIntoDocument(<AddTodoForm dispatch={spy}/>);
     var $el = $(ReactDOM.findDOMNode(addTodoForm));
     addTodoForm.refs.todoAction.value = '';
     TestUtils.Simulate.submit($el.find('form')[0]);
@@ -32,9 +37,9 @@ describe('AddTodoForm', () => {
     expect(spy).toNotHaveBeenCalled();
   });
 
-  it('should not call handleAdd if blank task entered', () => {
+  it('should not dispatch ADD_TODO if blank task entered', () => {
     var spy = expect.createSpy();
-    var addTodoForm = TestUtils.renderIntoDocument(<AddTodoForm handleAdd={spy}/>);
+    var addTodoForm = TestUtils.renderIntoDocument(<AddTodoForm dispatch={spy}/>);
     var $el = $(ReactDOM.findDOMNode(addTodoForm));
     addTodoForm.refs.todoAction.value = '               ';
     TestUtils.Simulate.submit($el.find('form')[0]);

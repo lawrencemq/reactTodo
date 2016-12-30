@@ -14,17 +14,24 @@ export var toggleShowCompleted = () => {
 };
 
 // toggling individual todo
-export var toggleTodoAsCompleted = (id) => {
+export var toggleTodo = (id) => {
   return {
-    type: 'TOGGLE_TODO_AS_COMPLETED',
+    type: 'TOGGLE_TODO',
     id
   }
 };
 
 // add todo
-export var addTodo = (todoText) => {
+export var addTodo = (text) => {
   return {
     type: 'ADD_TODO',
-    todoText
+    text
+  };
+};
+
+export var addTodos = (todos) => {
+  return {
+    type: 'ADD_TODOS',
+    todos
   };
 };
