@@ -1,3 +1,6 @@
+import moment from 'moment';
+import firebase, {firebaseRef} from "app/firebase/index";
+
 // set search text
 export var setSearchText = (searchText) => {
   return {
@@ -13,7 +16,7 @@ export var toggleShowCompleted = () => {
   }
 };
 
-// toggling individual todo
+// toggling individual
 export var toggleTodo = (id) => {
   return {
     type: 'TOGGLE_TODO',
@@ -21,11 +24,34 @@ export var toggleTodo = (id) => {
   }
 };
 
-// add todo
-export var addTodo = (text) => {
+// add
+export var addTodo = (todo) => {
   return {
     type: 'ADD_TODO',
-    text
+    todo
+  };
+};
+
+export var startAddTodo = (text) => {
+  return (dispatch, getState) => {
+    // create new to do item
+    const todo = {
+		text,
+		completed: false,
+		createdAt: moment().unix(),
+		completedAt: null
+	};
+
+    // save it to firebase async
+    const todoRef = firebaseRef.child('todos').push(todo);
+
+    // update store
+    return todoRef.then(() => {
+      dispatch(addTodo({
+              ...todo,
+          id: todoRef.key
+	  }));
+    });
   };
 };
 

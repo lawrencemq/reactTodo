@@ -30,14 +30,19 @@ describe('Reducers', () => {
 
   describe('todosReducer', () => {
     it('should add new todo', () => {
-        var action = {
+        const action = {
           type: 'ADD_TODO',
-          text: 'Fly spaceship'
-        }
+          todo: {
+            id: 'abc123',
+            text: "Something to do",
+            completed: false,
+            createdAt: 9382829
+          }
+        };
 
-        var response = reducers.todosReducer(df([]), df(action));
+        const response = reducers.todosReducer(df([]), df(action));
         expect(response.length).toEqual(1);
-        expect(response[0].text).toEqual(action.text);
+        expect(response[0]).toEqual(action.todo);
     });
 
     it('should bulk add new todos', () => {
