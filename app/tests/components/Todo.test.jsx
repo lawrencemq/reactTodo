@@ -6,7 +6,8 @@ var uuid = require('node-uuid');
 var moment = require('moment');
 var TestUtils = require('react-addons-test-utils');
 
-var {Todo} = require('Todo');
+import * as actions from 'actions';
+import {Todo} from 'Todo';
 
 describe('Todo', () => {
   it('should exist', () => {
@@ -40,23 +41,21 @@ describe('Todo', () => {
   });
 
 
-  it('should dispatch TOGGLE_TODO on click', () => {
+  it('should dispatch startToggleTodoTodo on click', () => {
     var spy = expect.createSpy();
-    var todoItems = {
+    var todoData = {
       id: '1',
       text: 'hello',
       completed: false,
       createdAt: moment.unix(0),
       completedAt: undefined
     };
-    var todo = TestUtils.renderIntoDocument(<Todo {...todoItems} dispatch={spy}/>);
+    const action = actions.startToggleTodo(todoData.id, !todoData.completed);
+    var todo = TestUtils.renderIntoDocument(<Todo {...todoData} dispatch={spy}/>);
     var $el = $(ReactDOM.findDOMNode(todo));
 
     TestUtils.Simulate.click($el[0]);
-    expect(spy).toHaveBeenCalledWith({
-      type: 'TOGGLE_TODO',
-      id: '1'
-    });
+    expect(spy).toHaveBeenCalledWith(action);
   });
 
 
