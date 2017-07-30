@@ -2,6 +2,9 @@
   "name": "TodoApplication",
   "version": "1.0.1",
   "description": "Simple react ToDo app",
+  "engines": {
+    "node": "6.11.1"
+  },
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test karma start",
