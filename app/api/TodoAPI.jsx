@@ -1,5 +1,9 @@
 module.exports = {
   filterTodos: function (todos, showCompleted, searchText) {
+    var simplifiedSearchText = '';
+    if(searchText){
+      simplifiedSearchText = searchText.toLowerCase();
+    }
     var filteredTodos = todos;
 
     // Filter by showCompleted
@@ -9,8 +13,8 @@ module.exports = {
 
     // Filter by searchText
     filteredTodos = filteredTodos.filter((todo) => {
-      var text = todo.text.toLowerCase();
-      return searchText.length === 0 || text.indexOf(searchText) > -1;
+      const text = todo.text.toLowerCase();
+      return simplifiedSearchText.length === 0 || text.indexOf(simplifiedSearchText) > -1;
     });
 
     // Sort todos with non-completed first
