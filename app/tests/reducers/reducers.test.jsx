@@ -123,6 +123,23 @@ describe('Reducers', () => {
       expect(response[0].text).toEqual(todos[0].text);
     });
 
+    it('should empty todos on user logout', () => {
+      const todos = [
+        {
+          id: '123',
+          text: 'something',
+          completed: true,
+          createdAt: 123,
+          completedAt: 124
+        }
+      ];
+      const action = {
+        type: 'LOGOUT'
+      };
+      const response = reducers.todosReducer(df(todos), df(action));
+      expect(response.length).toEqual(0);
+    });
+
   });
 
 });
