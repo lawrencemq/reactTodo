@@ -123,6 +123,33 @@ describe('Reducers', () => {
       expect(response[0].text).toEqual(todos[0].text);
     });
 
+    it('should delete todo', () => {
+      const todos = [
+        {
+          id: '123',
+          text: 'something',
+          completed: true,
+          createdAt: 123,
+          completedAt: 124
+        },
+        {
+          id: '456',
+          text: 'something else',
+          completed: false,
+          createdAt: 456,
+        }
+      ];
+      const action = {
+        type: 'DELETE_TODO',
+        id: todos[0].id,
+      };
+
+      const response = reducers.todosReducer(df(todos), df(action));
+      expect(response.length).toEqual(1);
+      expect(response[0].id).toEqual(todos[1].id);
+
+    });
+
     it('should empty todos on user logout', () => {
       const todos = [
         {

@@ -101,6 +101,25 @@ export var startAddTodos = () => {
 	};
 };
 
+export var deleteTodo = (id) => {
+  return {
+    type: 'DELETE_TODO',
+    id
+  }
+};
+
+export var startDeleteTodo = (id) => {
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid;
+    const todoRef = firebaseRef.child(`users/${uid}/todos/${id}`);
+		return todoRef.remove().then(() => {
+      dispatch(deleteTodo(id));
+    }).catch((e) => {
+      console.log('Could not delete item: ' + e.message);
+    });
+  };
+};
+
 export var startLogin = () => {
   return (dispatch, getState) => {
     return firebase.auth().signInWithPopup(githubProvider).then((result) => {

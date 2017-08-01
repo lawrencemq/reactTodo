@@ -169,6 +169,19 @@ describe('Actions', () => {
         }).catch(done);
       });
 
+      it('should delete todo and dispatch DELETE_TODO', (done) => {
+        const store = createMockStore({auth: {uid}});
+        store.dispatch(actions.startDeleteTodo(testTodoRef.id)).then(() => {
+          const actions = store.getActions();
+          expect(actions[0]).toInclude({
+            type: 'DELETE_TODO',
+            id: testTodoRef.id
+          });
+          done();
+        }).catch(done);
+
+      });
+
 
   });
 

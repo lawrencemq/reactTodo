@@ -9,22 +9,25 @@
     margin: 0;
   }
 
-  > :first-child {
-    margin-right: 1rem;
-  }
-
-  &:hover {
-    background: #f0f0f0;
-  }
 }
 
 .todo__subtext {
   color: #999;
+  font-size: .6rem;
 }
 
 .todo-completed {
   p, .todo-subtext {
     color: $light-color;
     text-decoration: line-through;
+  }
+}
+
+.delete-button {
+  border-left: 1px solid $light-grey-border;
+  height: 100%;
+
+  &:hover {
+    background: $delete-background-color;
   }
 }

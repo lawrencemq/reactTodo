@@ -1,33 +1,34 @@
-var React = require('react');
+import React from 'react';
 var moment = require('moment');
 var {connect} = require('react-redux');
 
-var actions = require('actions');
+import * as actions from 'actions';
 
 export var Todo = React.createClass({
 
-  render: function () {
-    var {id, text, completed, createdAt, completedAt, dispatch} = this.props;
-    var todoClassName = completed ? 'todo todo-completed' : 'todo';
+  render() {
+    const {id, text, completed, createdAt, completedAt, dispatch} = this.props;
+    const todoClassName = completed ? 'todo todo-completed row' : 'todo row';
 
     var renderDate = () => {
-      var message = completed ? 'Completed ' : 'Created ';
-      var timestamp = completed ? completedAt : createdAt;
+      const message = completed ? 'Completed ' : 'Created ';
+      const timestamp = completed ? completedAt : createdAt;
       return message + moment.unix(timestamp).format('MMM Do YYYY @ h:mm a');
     };
 
     return (
-      <div className={todoClassName} onClick={() => {
-        dispatch(actions.startToggleTodo(id, !completed));
-      }}>
-        <div>
-          <input type="checkbox" ref="isComplete" checked={completed}/>
+        <div className={todoClassName}>
+          <div className='column small-1' onClick={() => {dispatch(actions.startToggleTodo(id, !completed));}}>
+            <input type="checkbox" ref="isComplete" checked={completed}/>
+          </div>
+          <div className='column small-9' onClick={() => {dispatch(actions.startToggleTodo(id, !completed));}}>
+            <p className="todo-text">{text}</p>
+            <p className="todo__subtext">{renderDate()}</p>
+          </div>
+          <div className="delete-button column small-2" onClick={() => { dispatch(actions.startDeleteTodo(id));}}>
+            <p>X</p>
+          </div>
         </div>
-        <div>
-          <p className="todo-text">{text}</p>
-          <p className="todo__subtext">{renderDate()}</p>
-        </div>
-      </div>
     );
   }
 });
